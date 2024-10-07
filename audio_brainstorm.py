@@ -9,6 +9,20 @@ from nltk.corpus import wordnet
 nltk.download('wordnet')
 nltk.download('omw-1.4')
 
+from dotenv import load_dotenv
+import os
+import google.generativeai as palm
+
+  # Load variables from .env file
+load_dotenv()
+
+api_key = os.getenv('GOOGLE_API_KEY')
+
+if not api_key:
+    raise ValueError("No API Key found. Please set the GOOGLE_API_KEY environment variable")
+
+palm.configure(api_key=api_key)
+
 selected_genre = None
 selected_bpm = None
 selected_time_signature = None

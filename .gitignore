@@ -1,2 +1,31 @@
+# Environment Files
 .env
+
+# macOS System Files
 .DS_Store
+.AppleDouble
+.LSOverride
+
+#Python Cache Files
+__pycache__/
+*.py[cod]
+*.pyo
+.python_history
+
+# Virtual Environment Directories
+venv/
+env/
+.venv/
+
+# Build and Distribution Artifacts
+*.egg-info/
+dist/
+build/
+
+# Editor-specific Configuration Files
+.vscode/
+
+# Log Files and Sensitive Configuration
+*.log
+config.yaml
+secrets.json
