@@ -8,4 +8,16 @@ Gem::Specification.new do |s|
   s.files       = ['audio_brainstorm.py']
   s.homepage    = 'https://github.com/a-soultrain/gem_drafts' # Update with your actual GitHub repo
   s.license     = 'MIT'
+
+  s. add_runtime_dependency 'nltk', '~> 3.8.1'
+
+  s.post_install_message = <<~MESSAGE
+    This gem requires NLTK data to function correctly.
+    Please run the following commands in your Terminal after installation:
+
+    ```bash
+    python -m nltk.downloader wordnet
+    python -m nltk.downloader omw-1.4
+    ```
+  MESSAGE
 end
