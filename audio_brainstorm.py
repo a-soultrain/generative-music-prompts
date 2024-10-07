@@ -34,10 +34,14 @@ def display_welcome():
   """Displays the welcome message for the Audio Brainstorm Gem."""
   print("\nWelcome to Audio Brainstorm!\n")
   print("Your creative partner for generating electronic music song prompts.")
-  print("Tailored for Ableton Live 12 Standard Edition, Novation Launchpad X, Splice, and Xfer Serum.\n")
+  print("Tailored for Google Generative AI, pretty_MIDI, and pre-defined music theory.\n")
   print("Key mood associations and data translation based on the study found here:\n")
   print("Affective Musical Key Characteristics")
   print("https://legacy.wmich.edu/mus-theo/courses/keys.html \n")
+  print("pretty_midi 0.2.10")
+  print("Colin Raffel and Daniel P. W. Ellis. Intuitive Analysis, Creation and Manipulation of MIDI Data with pretty_midi.")
+  print("https://colinraffel.com/publications/ismir2014intuitive.pdf")
+  print("In 15th International Conference on Music Information Retrieval Late Breaking and Demo Papers, 2014. \n")
 
 def get_synonyms(word):
     synonyms = set()
@@ -45,6 +49,20 @@ def get_synonyms(word):
         for lemma in syn.lemmas():
             synonyms.add(lemma.name().replace(' - ', ' '))
     return synonyms
+
+def ensure_nltk_data():
+   #  List of NLTK resources needed
+   required_resources = ['wordnet', 'omw-1.4']
+
+   for resource in required_resources:
+      try:
+          # Check if the resouce is already available
+          nltk.data.find(f'corpa/{resource}')
+          print(f"{resource} is already downloaded.")
+      except LookupError:
+          # If the resource is not found, download it
+          print(f"{resource} is not found. Downloading...")
+          nltk.download(resource)
   
   # --- BPM Generation Logic ---
 bpm_ranges = {
@@ -429,5 +447,6 @@ def display_menu():
   window.mainloop()
 
 # Call the functions
+ensure_nltk_data()
 display_welcome()
 display_menu()
