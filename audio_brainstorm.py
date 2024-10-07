@@ -1,7 +1,9 @@
 import tkinter as tk
-from tkinter import ttk  # More modern-looking widgets
+from tkinter import ttk, scrolledtext, messagebox
+
 import random
 import re
+
 import nltk
 from nltk.corpus import wordnet
 
@@ -11,6 +13,7 @@ nltk.download('omw-1.4')
 
 from dotenv import load_dotenv
 import os
+
 import google.generativeai as palm
 
   # Load variables from .env file
@@ -34,7 +37,7 @@ def display_welcome():
   """Displays the welcome message for the Audio Brainstorm Gem."""
   print("\nWelcome to Audio Brainstorm!\n")
   print("Your creative partner for generating electronic music song prompts.")
-  print("Tailored for Google Generative AI, pretty_MIDI, and pre-defined music theory.\n")
+  print("Tailored for Google Generative AI, pretty_MIDI, Musixmatch, Spotify, and pre-defined music theory.\n")
   print("Key mood associations and data translation based on the study found here:\n")
   print("Affective Musical Key Characteristics")
   print("https://legacy.wmich.edu/mus-theo/courses/keys.html \n")
