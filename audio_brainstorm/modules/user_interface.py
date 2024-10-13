@@ -1,7 +1,7 @@
 """
 This module handles the menu window output display for the project.
 """
-from audio_brainstorm.modules.prompt_generation import get_synonyms
+from audio_brainstorm.modules.prompt_generation import get_synonyms, get_mood_from_input
 from audio_brainstorm.data.dictionaries import (
     parent_genre,
     main_genre,
@@ -25,6 +25,8 @@ def display_welcome():
     print("Colin Raffel and Daniel P. W. Ellis. Intuitive Analysis, Creation and Manipulation of MIDI Data with pretty_midi.")
     print("https://colinraffel.com/publications/ismir2014intuitive.pdf")
     print("In 15th International Conference on Music Information Retrieval Late Breaking and Demo Papers, 2014. \n")
+
+# --- User Selections ---
 
 
 def get_parent_genre():
@@ -58,9 +60,36 @@ def get_main_genre(parent_genre_choice):
             choice = int(
                 input("Enter the number corresponding to your desired genre: "))
             if 1 <= choice <= len(genres):
-                return genres[choice - 1]
+                chosen_genre = genres[choice - 1]
+                # --- Optional Subgenre Selection ---
+                use_subgenre = input(
+                    f"Would you like to specify a subgenre for {chosen_genre}? (yes/no): ").lower()
+                if use_subgenre == 'y':
+                    return get_subgenre(parent_genre_choice, chosen_genre)
+                else:
+                    return chosen_genre
         except ValueError:
             print("Invalid input. Please enter a number")
+
+
+def get_subgenre(parent_genre_choice, genre):
+    """Prompts the user to select a subgenre for the chosen genre."""
+    print(f"\nAvailable Subgenres for {genre}:")
+    subgenres = main_genre[parent_genre_choice][genre]["subgenres"]
+
+    for i, subgenre in enumerate(subgenres):
+        print(f"{i + 1}. {subgenre}")
+
+    while True:
+        try:
+            choice = int(
+                input("Enter the number corresponding to your desired subgenre: "))
+            if 1 <= choice <= len(subgenres):
+                return subgenres[choice - 1]
+            else:
+                print("Invalid choice. Please enter a number from the list.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
 
 def get_time_signature():
@@ -82,34 +111,34 @@ def get_time_signature():
 
 def get_mood():
     """Prompts the user to enter a mood and provides suggestions."""
-    mood_options = list(key_mood_description.values())
     while True:
         mood_input = input("Enter a mood (or press Enter to skip): ").lower()
         if not mood_input:
-            return None  # Allow skipping mood selection
+            return None, None  # Allow skipping, return None for mood and key
 
-        suggestions = []
-        typed_synonyms = get_synonyms(mood_input)
-        for option in mood_options:
-            combined_description = f"{option['original']} {
-                option['paraphrased']}".lower()
-            if mood_input in combined_description or any(syn in combined_description for syn in typed_synonyms):
-                suggestions.append(option["paraphrased"])
+        matching_moods = []
+        input_words = set(word.lower() for word in mood_input.split())
 
-        if suggestions:
-            print("\nHere are some suggestions based on your input:")
-            for i, suggestion in enumerate(suggestions):
-                print(f"{i+1}. {suggestion}")
+        # Find matching moods and store them with their data
+        for key, mood_data in key_mood_description.items():
+            description_words = set(
+                word.lower() for word in f"{mood_data['original']} {mood_data['paraphrased']}".split())
+            if any(word in description_words for word in input_words) or \
+               any(word in get_synonyms(word) for word in input_words):
+                matching_moods.append((key, mood_data['original']))
+
+        if matching_moods:
+            print("\nMatching Moods:")
+            for i, (key, description) in enumerate(matching_moods):
+                print(f"{i + 1}. {description} (Key: {key})")
 
             while True:
                 try:
                     choice = int(
-                        input("Enter the number for the best match (or 0 for none): "))
-                    if 0 <= choice <= len(suggestions):
-                        if choice == 0:
-                            return mood_input  # Use the original input
-                        else:
-                            return suggestions[choice - 1]
+                        input("Enter the number for your desired mood: "))
+                    if 1 <= choice <= len(matching_moods):
+                        selected_key, selected_description = matching_moods[choice - 1]
+                        return selected_description, selected_key
                     else:
                         print("Invalid choice. Please enter a number from the list.")
                 except ValueError:

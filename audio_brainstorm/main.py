@@ -31,14 +31,15 @@ def get_user_selections():
     parent_genre_choice = get_parent_genre()
     main_genre_choice = get_main_genre(parent_genre_choice)
     time_signature_choice = get_time_signature()
-    mood_choice = get_mood()
+    mood_data, key = get_mood()
     mode_choice = get_mode()
 
     return {
         "Parent Genre": parent_genre_choice,
         "Genre": main_genre_choice,
         "Time Signature": time_signature_choice,
-        "Mood": mood_choice,
+        "Mood": mood_data,
+        "Key": key,
         "Mode": mode_choice
     }
 
@@ -48,6 +49,7 @@ def main():
     display_welcome()
     user_selections = get_user_selections()
 
+    # --- Calculated BPM from music_theory.py based on genre bpm range ---
     bpm = get_bpm_from_genre(
         user_selections["Parent Genre"], user_selections["Genre"])
 
@@ -57,6 +59,7 @@ def main():
         "Generated BPM": bpm,
         "Time Signature": user_selections["Time Signature"],
         "Mood": user_selections["Mood"],
+        "Key": user_selections["Key"],
         "Mode": user_selections["Mode"]
     }
 
