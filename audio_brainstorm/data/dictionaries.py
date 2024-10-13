@@ -237,27 +237,27 @@ minor_progressions = [
 modes = {
     "Ionian": {
         "description": "Happy, bright, simple",
-        "tonic positions": "I - ii - iii - IV - V - vi - vii - I"
+        "degree sequence": "I - ii - iii - IV - V - vi - vii - I"
     },
     "Dorian": {
         "description": "Bluesy, dark but optimistic",
-        "tonic positions": "ii - iii - IV - V - vi - vii - I - ii"
+        "degree sequence": "ii - iii - IV - V - vi - vii - I - ii"
     },
     "Phrygian": {
         "description": "Extra dark, exotic",
-        "tonic positions": "iii - IV - V - vi - vii - I - ii - iii"
+        "degree sequence": "iii - IV - V - vi - vii - I - ii - iii"
     },
     "Lydian": {
         "description": "Fantastical, futuristic, spacey",
-        "tonic positions": "IV - V - vi - vii - I - ii - iii - IV"
+        "degree sequence": "IV - V - vi - vii - I - ii - iii - IV"
     },
     "Mixolydian": {
         "description": "Even more cool, more chill",
-        "tonic positions": "V - vi - vii - I - ii - iii - IV - V"
+        "degree sequence": "V - vi - vii - I - ii - iii - IV - V"
     },
     "Aeolian": {
         "description": "Dark, sad, serious, dangerous",
-        "tonic positions": "vi - vii - I - ii - iii - IV - V - vi"
+        "degree sequence": "vi - vii - I - ii - iii - IV - V - vi"
     }
 }
 

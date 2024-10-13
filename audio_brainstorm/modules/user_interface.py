@@ -3,6 +3,7 @@ This module handles the menu window output display for the project.
 """
 from audio_brainstorm.modules.prompt_generation import get_synonyms
 from audio_brainstorm.data.dictionaries import (
+    parent_genre,
     main_genre,
     key_mood_description,
     modes,
@@ -15,7 +16,7 @@ from audio_brainstorm.data.dictionaries import (
 def display_welcome():
     """Displays the welcome message for the Audio Brainstorm Gem."""
     print("\nWelcome to Play the Wrong Notes!\n")
-    print("Your creative partner for generating electronic music song prompts.")
+    print("Your creative partner for generating music song prompts.")
     print("Tailored for Google Generative AI, pretty_MIDI, Musixmatch, Spotify, and pre-defined music theory.\n")
     print("Key mood associations and data translation based on the study found here:\n")
     print("Affective Musical Key Characteristics")
@@ -26,10 +27,28 @@ def display_welcome():
     print("In 15th International Conference on Music Information Retrieval Late Breaking and Demo Papers, 2014. \n")
 
 
-def get_user_genre():
-    """Prompts the user to select a genre."""
+def get_parent_genre():
+    """Prompts the user to select parent genres."""
+    print("Select a Genre Branch: ")
+    branches = list(parent_genre.keys())
+
+    for i, branch in enumerate(branches):
+        print(f"{i + 1}. {branch}")
+
+    while True:
+        try:
+            choice = int(
+                input("Enter the number corresponding to your desired branch: "))
+            if 1 <= choice <= len(branches):
+                return branches[choice - 1]
+        except ValueError:
+            print("Invalid input. Please enter a number")
+
+
+def get_main_genre(parent_genre_choice):
+    """Prompts the user to select a genre based on the chosen parent genre."""
     print("Available Genres:")
-    genres = list(main_genre["Electronic"].keys())
+    genres = list(main_genre[parent_genre_choice].keys())
 
     for i, genre in enumerate(genres):
         print(f"{i + 1}. {genre}")
@@ -40,13 +59,11 @@ def get_user_genre():
                 input("Enter the number corresponding to your desired genre: "))
             if 1 <= choice <= len(genres):
                 return genres[choice - 1]
-            else:
-                print("Invalid choice. Please enter a number between 1 and", len(genres))
         except ValueError:
             print("Invalid input. Please enter a number")
 
 
-def get_user_time_signature():
+def get_time_signature():
     """Prompts the user to select a time signature."""
     print("\nAvailable Time Signatures:")
 
@@ -59,13 +76,11 @@ def get_user_time_signature():
                 input("Enter the number corresponding to your desired time signature: "))
             if 1 <= choice <= len(time_signatures):
                 return list(time_signatures)[choice - 1]
-            else:
-                print("Invalid choice. Please enter a number from the list.")
         except ValueError:
             print("Invalid input. Please enter a number.")
 
 
-def get_user_mood():
+def get_mood():
     """Prompts the user to enter a mood and provides suggestions."""
     mood_options = list(key_mood_description.values())
     while True:
@@ -103,7 +118,7 @@ def get_user_mood():
             print("No matching moods found. Please try again.")
 
 
-def get_user_mode():
+def get_mode():
     """Prompts the user to select a mode from the terminal."""
     print("\nAvailable Modes:")
     for i, (mode, mode_data) in enumerate(modes.items()):
