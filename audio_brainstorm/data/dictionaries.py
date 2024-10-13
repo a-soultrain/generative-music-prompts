@@ -8,6 +8,7 @@ It includes:
 - Major Chord Progressions
 - Minor Chord Progressions
 - Modes
+- Time Signatures
 """
 
 # --- Parent Genres, Arrangements, Common Instruments, Characteristics ---
@@ -259,3 +260,6 @@ modes = {
         "tonic positions": "vi - vii - I - ii - iii - IV - V - vi"
     }
 }
+
+# --- Time Signatures ---
+time_signatures = {"4/4", "3/4", "6/8", "5/4", "7/8", "12/8"}

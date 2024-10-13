@@ -1,13 +1,12 @@
 """
 This module handles the menu window output display for the project.
 """
-import tkinter as tk
-from tkinter import ttk
-
 from audio_brainstorm.modules.prompt_generation import get_synonyms
 from audio_brainstorm.data.dictionaries import (
+    main_genre,
     key_mood_description,
-    modes
+    modes,
+    time_signatures
 )
 
 # --- Introductory Output ---
@@ -27,68 +26,103 @@ def display_welcome():
     print("In 15th International Conference on Music Information Retrieval Late Breaking and Demo Papers, 2014. \n")
 
 
-# --- Genre Selection ---
-genre_frame = ttk.LabelFrame(window, text="Genre Selection")
-genre_frame.pack(fill="x", padx=10, pady=5)
+def get_user_genre():
+    """Prompts the user to select a genre."""
+    print("Available Genres:")
+    genres = list(main_genre["Electronic"].keys())
 
-ttk.Label(genre_frame, text="Select Genre:").pack(pady=5)
-genres = ["Ambient", "Downtempo", "Breakbeat", "Disco", "House", "Techno",
-          "Trance", "Electro", "Industrial", "Jungle", "Drum and Bass",
-          "Hardcore", "Chiptune"]
-selected_genre = tk.StringVar(window)
-genre_combobox = ttk.Combobox(
-    window, textvariable=selected_genre, values=genres, state="readonly")
-genre_combobox.current(0)  # Set default to Ambient
-genre_combobox.pack(pady=5, padx=10)
+    for i, genre in enumerate(genres):
+        print(f"{i + 1}. {genre}")
 
-# --- Time Signature Selection ---
-time_signature_frame = ttk.LabelFrame(window, text="Time Signature Selection")
-time_signature_frame.pack(fill="x", padx=10, pady=5)
+    while True:
+        try:
+            choice = int(
+                input("Enter the number corresponding to your desired genre: "))
+            if 1 <= choice <= len(genres):
+                return genres[choice - 1]
+            else:
+                print("Invalid choice. Please enter a number between 1 and", len(genres))
+        except ValueError:
+            print("Invalid input. Please enter a number")
 
-ttk.Label(time_signature_frame, text="Select Time Signature:").pack(pady=5)
-time_signatures = ["4/4", "3/4", "6/8", "5/4", "7/8", "12/8"]
-selected_time_signature = tk.StringVar(window)
-time_signature_combobox = ttk.Combobox(
-    window, textvariable=selected_time_signature, values=time_signatures, state="readonly")
-time_signature_combobox.current(0)  # Set default to 4/4
-time_signature_combobox.pack(pady=5, padx=10)
 
-# --- Mood Selection ---
-mood_frame = ttk.LabelFrame(window, text="Mood Selection")
-mood_frame.pack(fill="both", padx=10, pady=5, expand=True)
+def get_user_time_signature():
+    """Prompts the user to select a time signature."""
+    print("\nAvailable Time Signatures:")
 
-ttk.Label(mood_frame, text="Select Mood:").pack(pady=5)
+    for i, signature in enumerate(time_signatures):
+        print(f"{i + 1}. {signature}")
 
-mood_options = list(key_mood_description.values())
+    while True:
+        try:
+            choice = int(
+                input("Enter the number corresponding to your desired time signature: "))
+            if 1 <= choice <= len(time_signatures):
+                return list(time_signatures)[choice - 1]
+            else:
+                print("Invalid choice. Please enter a number from the list.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
-selected_mood = tk.StringVar(window)
-mood_entry = ttk.Entry(mood_frame, textvariable=selected_mood)
-mood_entry.pack(pady=5, padx=10, fill="x")
 
-listbox = tk.Listbox(mood_frame, height=5)
-listbox.pack(pady=5, padx=10, fill="both", expand=True)
+def get_user_mood():
+    """Prompts the user to enter a mood and provides suggestions."""
+    mood_options = list(key_mood_description.values())
+    while True:
+        mood_input = input("Enter a mood (or press Enter to skip): ").lower()
+        if not mood_input:
+            return None  # Allow skipping mood selection
 
-typed_text = mood_entry.get().lower()
-listbox.delete(0, tk.END)  # Clear the listbox
-if typed_text:
-    typed_synonyms = get_synonyms(typed_text)
-    for option in mood_options:
-        combined_description = f"{option['original']} {
-            option['paraphrased']}".lower()
-        if typed_text in combined_description or any(
-                syn in combined_description for syn in typed_synonyms):
-            listbox.insert(tk.END, option["paraphrased"])
+        suggestions = []
+        typed_synonyms = get_synonyms(mood_input)
+        for option in mood_options:
+            combined_description = f"{option['original']} {
+                option['paraphrased']}".lower()
+            if mood_input in combined_description or any(syn in combined_description for syn in typed_synonyms):
+                suggestions.append(option["paraphrased"])
 
-# --- Mode Selection
-mode_frame = ttk.LabelFrame(window, text="Mode Selection")
-mode_frame.pack(fill="x", padx=10, pady=5)
+        if suggestions:
+            print("\nHere are some suggestions based on your input:")
+            for i, suggestion in enumerate(suggestions):
+                print(f"{i+1}. {suggestion}")
 
-ttk.Label(mode_frame, text="Select mode:").pack(pady=5)
+            while True:
+                try:
+                    choice = int(
+                        input("Enter the number for the best match (or 0 for none): "))
+                    if 0 <= choice <= len(suggestions):
+                        if choice == 0:
+                            return mood_input  # Use the original input
+                        else:
+                            return suggestions[choice - 1]
+                    else:
+                        print("Invalid choice. Please enter a number from the list.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+        else:
+            print("No matching moods found. Please try again.")
 
-mode_var = tk.StringVar(value="Ionian")
 
-for mode, mode_data in modes.items():
-    radiobutton = ttk.Radiobutton(mode_frame, text=f"{
-                                  mode} ({
-                                      mode_data['description']})", variable=mode_var, value=mode)
-    radiobutton.pack(anchor="w", padx=10, pady=2)
+def get_user_mode():
+    """Prompts the user to select a mode from the terminal."""
+    print("\nAvailable Modes:")
+    for i, (mode, mode_data) in enumerate(modes.items()):
+        print(f"{i+1}. {mode} ({mode_data['description']})")
+
+    while True:
+        try:
+            choice = int(
+                input("Enter the number corresponding to your desired mode: "))
+            if 1 <= choice <= len(modes):
+                return list(modes.keys())[choice - 1]
+            else:
+                print("Invalid choice. Please enter a number from the list.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
+
+def display_output(output_data):
+    """Displays the generated output data in the terminal."""
+    print("\n----- Generated Song Prompt -----\n")
+    for key, value in output_data.items():
+        print(f"{key}: {value}")

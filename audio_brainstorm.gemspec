@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'audio_brainstorm'
-  s.version     = '0.1.1'
+  s.version     = '0.2.1'
   s.summary     = 'A creative partner for generating electronic music prompts.'
   s.description = 'Tailored for Ableton Live 12 Standard Edition, Novation Launchpad X, Splice, and Xfer Serum.'
   s.authors     = ['a-SoulTrain']
