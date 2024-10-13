@@ -1,3 +1,6 @@
+"""
+The meat and potatoes, yo.
+"""
 from audio_brainstorm.config.settings import logging
 from audio_brainstorm.modules.music_theory import (
     get_key_from_mood,
@@ -20,20 +23,6 @@ from audio_brainstorm.modules.user_interface import (
     tk,
     random
 )
-
-
-def display_welcome():
-    """Displays the welcome message for the Audio Brainstorm Gem."""
-    print("\nWelcome to Audio Brainstorm!\n")
-    print("Your creative partner for generating electronic music song prompts.")
-    print("Tailored for Google Generative AI, pretty_MIDI, Musixmatch, Spotify, and pre-defined music theory.\n")
-    print("Key mood associations and data translation based on the study found here:\n")
-    print("Affective Musical Key Characteristics")
-    print("https://legacy.wmich.edu/mus-theo/courses/keys.html \n")
-    print("pretty_midi 0.2.10")
-    print("Colin Raffel and Daniel P. W. Ellis. Intuitive Analysis, Creation and Manipulation of MIDI Data with pretty_midi.")
-    print("https://colinraffel.com/publications/ismir2014intuitive.pdf")
-    print("In 15th International Conference on Music Information Retrieval Late Breaking and Demo Papers, 2014. \n")
 
 
 def confirm_selections():
