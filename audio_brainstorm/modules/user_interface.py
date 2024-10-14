@@ -1,11 +1,10 @@
 """
 This module handles the menu window output display for the project.
 """
-from audio_brainstorm.modules.prompt_generation import get_synonyms, get_mood_from_input
+from audio_brainstorm.modules.prompt_generation import mood_synonyms_dict
 from audio_brainstorm.data.dictionaries import (
     parent_genre,
     main_genre,
-    key_mood_description,
     modes,
     time_signatures
 )
@@ -110,33 +109,30 @@ def get_time_signature():
 
 
 def get_mood():
-    """Prompts the user to enter a mood and provides suggestions."""
+    """Prompts the user to enter a mood and provides the best matching keys and descriptions."""
     while True:
         mood_input = input("Enter a mood (or press Enter to skip): ").lower()
         if not mood_input:
             return None, None  # Allow skipping, return None for mood and key
 
-        matching_moods = []
         input_words = set(word.lower() for word in mood_input.split())
+        matching_moods = []
 
-        # Find matching moods and store them with their data
-        for key, mood_data in key_mood_description.items():
-            description_words = set(
-                word.lower() for word in f"{mood_data['original']} {mood_data['paraphrased']}".split())
-            if any(word in description_words for word in input_words) or \
-               any(word in get_synonyms(word) for word in input_words):
-                matching_moods.append((key, mood_data['original']))
+        for key, data in mood_synonyms_dict.items():
+            if any(word in data["synonyms"] for word in input_words):
+                matching_moods.append((key, data["description"]))
 
         if matching_moods:
             print("\nMatching Moods:")
-            for i, (key, description) in enumerate(matching_moods):
+            # Show up to 5 matches
+            for i, (key, description) in enumerate(matching_moods[:5]):
                 print(f"{i + 1}. {description} (Key: {key})")
 
             while True:
                 try:
                     choice = int(
                         input("Enter the number for your desired mood: "))
-                    if 1 <= choice <= len(matching_moods):
+                    if 1 <= choice <= len(matching_moods[:5]):
                         selected_key, selected_description = matching_moods[choice - 1]
                         return selected_description, selected_key
                     else:
