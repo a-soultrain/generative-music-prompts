@@ -95,15 +95,17 @@ def get_time_signature():
     """Prompts the user to select a time signature."""
     print("\nAvailable Time Signatures:")
 
-    for i, signature in enumerate(time_signatures):
-        print(f"{i + 1}. {signature}")
+    for i, (signature, description) in enumerate(time_signatures.items()):
+        print(f"{i + 1}. {signature} ({description})")
 
     while True:
         try:
             choice = int(
                 input("Enter the number corresponding to your desired time signature: "))
             if 1 <= choice <= len(time_signatures):
-                return list(time_signatures)[choice - 1]
+                return list(time_signatures.keys())[choice - 1]
+            else:
+                print("Invalid choice. Please enter a number from the list.")
         except ValueError:
             print("Invalid input. Please enter a number.")
 

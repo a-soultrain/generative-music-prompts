@@ -15,12 +15,13 @@ from audio_brainstorm.data.dictionaries import (
 
 
 def get_bpm_from_genre(parent_genre, genre):
-    """
-    Returns a random BPM within the range for the given genre.
-    """
-    if genre in main_genre[parent_genre]:
-        bpm_range = main_genre[parent_genre][genre]["bpm_range"]
-        return random.randint(bpm_range[0], bpm_range[1])
+    """Returns a random BPM within the range for the given genre."""
+    if parent_genre in main_genre:
+        for main_genre_value in main_genre[parent_genre].values():
+            if genre in main_genre_value.get("subgenres", []):
+                bpm_range = main_genre_value["bpm_range"]
+                return random.randint(bpm_range[0], bpm_range[1])
+    return None
 
 
 def get_key_from_mood(mood, threshold=1):

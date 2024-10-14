@@ -10,6 +10,7 @@ It includes:
 - Modes
 - Time Signatures
 """
+from collections import OrderedDict
 
 # --- Parent Genres, Arrangements, Common Instruments, Characteristics ---
 parent_genre = {
@@ -262,4 +263,11 @@ modes = {
 }
 
 # --- Time Signatures ---
-time_signatures = {"4/4", "3/4", "6/8", "5/4", "7/8", "12/8"}
+time_signatures = OrderedDict([
+    ("4/4", "Standard Time"),
+    ("3/4", "Waltz Time"),
+    ("6/8", "Fast Waltz/Jig"),
+    ("5/4", "Asymmetrical/Driving Time"),
+    ("7/8", "Asymmetrical/Subdivision Time"),
+    ("12/8", "Compound Time")
+])

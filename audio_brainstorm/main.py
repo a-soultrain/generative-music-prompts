@@ -11,7 +11,7 @@ The module utilizes other modules for:
 
 The generated prompt data is then displayed to the user via Terminal.
 """
-
+import random
 from audio_brainstorm.modules.user_interface import (
     display_welcome,
     get_parent_genre,
@@ -23,6 +23,9 @@ from audio_brainstorm.modules.user_interface import (
 )
 from audio_brainstorm.modules.music_theory import (
     get_bpm_from_genre
+)
+from audio_brainstorm.data.dictionaries import (
+    parent_genre
 )
 
 
@@ -53,6 +56,15 @@ def main():
     bpm = get_bpm_from_genre(
         user_selections["Parent Genre"], user_selections["Genre"])
 
+    # --- Get a random arrangement from the selected parent genre ---
+    arrangement = random.choice(
+        parent_genre[user_selections["Parent Genre"]]["arrangement_options"])
+
+    instruments = parent_genre[user_selections["Parent Genre"]
+                               ]["common_instruments"]
+    characteristics = parent_genre[user_selections["Parent Genre"]
+                                   ]["defining_characteristics"]
+
     output_data = {
         "Parent Genre": user_selections["Parent Genre"],
         "Genre": user_selections["Genre"],
@@ -60,7 +72,10 @@ def main():
         "Time Signature": user_selections["Time Signature"],
         "Mood": user_selections["Mood"],
         "Key": user_selections["Key"],
-        "Mode": user_selections["Mode"]
+        "Mode": user_selections["Mode"],
+        "Arrangement": arrangement,
+        "Instruments": instruments,
+        "Characteristics": characteristics
     }
 
     display_output(output_data)
