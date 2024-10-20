@@ -13,10 +13,10 @@ from audio_brainstorm.data.dictionaries import (
 
 
 def display_welcome():
-    """Displays the welcome message for the Audio Brainstorm Gem."""
+    """Displays the welcome message for application."""
     print("\nWelcome to Play the Wrong Notes!\n")
     print("Your creative partner for generating music song prompts.")
-    print("Tailored for Google Generative AI, pretty_MIDI, Musixmatch, Spotify, and pre-defined music theory.\n")
+    print("Tailored for Google Generative AI, PyTorch, pretty_MIDI, FluidSynth, Musixmatch, Spotify, and pre-defined music theory.\n")
     print("Key mood associations and data translation based on the study found here:\n")
     print("Affective Musical Key Characteristics")
     print("https://legacy.wmich.edu/mus-theo/courses/keys.html \n")

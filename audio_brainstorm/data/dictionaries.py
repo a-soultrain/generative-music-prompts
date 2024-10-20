@@ -5,8 +5,6 @@ It includes:
 - Parent Genres, Arrangements, Common Instruments, and Characteristics
 - Main Genres, BPM Ranges, and Subgenres
 - Key-Mood Associations
-- Major Chord Progressions
-- Minor Chord Progressions
 - Modes
 - Time Signatures
 """
@@ -264,10 +262,10 @@ modes = {
 
 # --- Time Signatures ---
 time_signatures = OrderedDict([
-    ("4/4", "Standard Time"),
-    ("3/4", "Waltz Time"),
+    ("4/4", "Standard"),
+    ("3/4", "Waltz"),
     ("6/8", "Fast Waltz/Jig"),
-    ("5/4", "Asymmetrical/Driving Time"),
-    ("7/8", "Asymmetrical/Subdivision Time"),
-    ("12/8", "Compound Time")
+    ("5/4", "Asymmetrical/Driving"),
+    ("7/8", "Asymmetrical/Subdivision"),
+    ("12/8", "Compound")
 ])
