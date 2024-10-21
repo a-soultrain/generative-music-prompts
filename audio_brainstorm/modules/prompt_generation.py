@@ -12,8 +12,6 @@ from nltk.corpus import wordnet
 import nltk
 from audio_brainstorm.data.dictionaries import key_mood_description
 
-nltk.data.path = [os.path.join(os.environ['VIRTUAL_ENV'], 'nltk_data')]
-
 # Initialize the lemmatizer once globally
 lemmatizer = WordNetLemmatizer()
 
