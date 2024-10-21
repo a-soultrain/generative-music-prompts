@@ -1,0 +1,28 @@
+# Python:
+*.pyc
+__pycache__/
+venv/
+.venv/
+
+# Build artifacts:
+dist/
+build/
+egg-info/
+*.egg-info/
+
+# Local configuration:
+.env
+.idea/
+.vscode/
+
+# System files:
+Thumbs.db
+.DS_Store
+
+# Docker:
+Dockerfile
+
+# git:
+.git/
+.gitignore
+.github/
