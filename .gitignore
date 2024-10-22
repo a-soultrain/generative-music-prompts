@@ -43,3 +43,10 @@ var/
 *.log
 config.yaml
 secrets.json
+
+# Docker
+Dockerfile*
+docker-compose.*
+
+#  Built Docker images
+**/.docker
