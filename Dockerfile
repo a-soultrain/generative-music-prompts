@@ -2,12 +2,13 @@ FROM python:3.12
 
 WORKDIR /app
 
+# Combine dependency installation for efficiency
 COPY requirements.txt ./
-RUN apt-get update && apt-get install -y git
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./audio_brainstorm /app
+# Copy only necessary code 
+COPY ./audio_brainstorm/ /app/audio_brainstorm/ 
 
-EXPOSE 8000 
+EXPOSE 8000
 
-CMD ["python", "main.py"]
+CMD ["python", "-m", "audio_brainstorm.main"] 
