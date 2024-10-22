@@ -1,7 +1,9 @@
 """
 This module handles the menu window output display for the project.
 """
-from audio_brainstorm.modules.prompt_generation import mood_synonyms_dict
+from audio_brainstorm.modules.prompt_generation import (
+    get_mood_from_input
+)
 from audio_brainstorm.data.dictionaries import (
     parent_genre,
     main_genre,
@@ -117,30 +119,12 @@ def get_mood():
         if not mood_input:
             return None, None  # Allow skipping, return None for mood and key
 
-        input_words = set(word.lower() for word in mood_input.split())
-        matching_moods = []
+        selected_key, selected_description = get_mood_from_input(mood_input)
 
-        for key, data in mood_synonyms_dict.items():
-            if any(word in data["synonyms"] for word in input_words):
-                matching_moods.append((key, data["description"]))
-
-        if matching_moods:
-            print("\nMatching Moods:")
-            # Show up to 5 matches
-            for i, (key, description) in enumerate(matching_moods[:5]):
-                print(f"{i + 1}. {description} (Key: {key})")
-
-            while True:
-                try:
-                    choice = int(
-                        input("Enter the number for your desired mood: "))
-                    if 1 <= choice <= len(matching_moods[:5]):
-                        selected_key, selected_description = matching_moods[choice - 1]
-                        return selected_description, selected_key
-                    else:
-                        print("Invalid choice. Please enter a number from the list.")
-                except ValueError:
-                    print("Invalid input. Please enter a number.")
+        if selected_key:
+            print(f"\nSelected Mood: {
+                  selected_description} (Key: {selected_key})")
+            return selected_description, selected_key
         else:
             print("No matching moods found. Please try again.")
 

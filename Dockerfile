@@ -1,4 +1,4 @@
-FROM python:3.12.7-slim-bullseye
+FROM python:3.12
 
 WORKDIR /app
 
@@ -10,4 +10,4 @@ COPY ./audio_brainstorm /app
 
 EXPOSE 8000 
 
-CMD ["python3", "main.py"]
+CMD ["python", "main.py"]
