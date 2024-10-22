@@ -1,36 +1,18 @@
 annotated-types==0.7.0
 astroid==3.3.5
--e git+https://github.com/a-soultrain/generative-music-prompts.git@2e6b663082b98e9609d19a75aa4c8cf372dca2a6#egg=audio_brainstorm
+-e git+https://github.com/a-soultrain/generative-music-prompts.git@8fa86271cb3ee7ab3d69b3cddc7838c9b9964371#egg=audio_brainstorm
 cachetools==5.5.0
 certifi==2024.8.30
 charset-normalizer==3.3.2
 click==8.1.7
 dill==0.3.9
 docstring_parser==0.16
-google-ai-generativelanguage==0.6.10
-google-api-core==2.20.0
-google-api-python-client==2.148.0
-google-auth==2.35.0
-google-auth-httplib2==0.2.0
-google-cloud-aiplatform==1.70.0
-google-cloud-bigquery==3.26.0
-google-cloud-core==2.4.1
-google-cloud-resource-manager==1.12.5
-google-cloud-storage==2.18.2
-google-crc32c==1.6.0
-google-generativeai==0.8.3
-google-resumable-media==2.7.2
-googleapis-common-protos==1.65.0
-grpc-google-iam-v1==0.13.1
-grpcio==1.66.2
-grpcio-status==1.66.2
 httplib2==0.22.0
 idna==3.10
 isort==5.13.2
 joblib==1.4.2
 mccabe==0.7.0
 mido==1.3.2
-nltk==3.9.1
 numpy==2.1.2
 packaging==23.2
 platformdirs==4.3.6
