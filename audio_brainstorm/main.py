@@ -31,17 +31,11 @@ from audio_brainstorm.data.dictionaries import (
 
 def get_user_selections():
     """Collects user selections for genre, time signature, mood, and mode."""
-    while True:
-        parent_genre_choice = get_parent_genre()
-        main_genre_choice = get_main_genre(parent_genre_choice)
-        time_signature_choice = get_time_signature()
-        mood_data, key = get_mood()
-        mode_choice = get_mode()
-
-        restart = input(
-            "Type '-restart' to start over, or press Enter to continue.")
-        if restart != '-restart':
-            break
+    parent_genre_choice = get_parent_genre()
+    main_genre_choice = get_main_genre(parent_genre_choice)
+    time_signature_choice = get_time_signature()
+    mood_data, key = get_mood()
+    mode_choice = get_mode()
 
     return {
         "Parent Genre": parent_genre_choice,
@@ -56,42 +50,35 @@ def get_user_selections():
 def main():
     """Main function to run the Audio Brainstorm Gem."""
     display_welcome()
+    user_selections = get_user_selections()
 
-    while True:
-        user_selections = get_user_selections()
+    # --- Calculated BPM from music_theory.py based on genre bpm range ---
+    bpm = get_bpm_from_genre(
+        user_selections["Parent Genre"], user_selections["Genre"])
 
-        # --- Calculated BPM from music_theory.py based on genre bpm range ---
-        bpm = get_bpm_from_genre(
-            user_selections["Parent Genre"], user_selections["Genre"])
+    # --- Get a random arrangement from the selected parent genre ---
+    arrangement = random.choice(
+        parent_genre[user_selections["Parent Genre"]]["arrangement_options"])
 
-        # --- Get a random arrangement from the selected parent genre ---
-        arrangement = random.choice(
-            parent_genre[user_selections["Parent Genre"]]["arrangement_options"])
+    instruments = parent_genre[user_selections["Parent Genre"]
+                               ]["common_instruments"]
+    characteristics = parent_genre[user_selections["Parent Genre"]
+                                   ]["defining_characteristics"]
 
-        instruments = parent_genre[user_selections["Parent Genre"]
-                                   ]["common_instruments"]
-        characteristics = parent_genre[user_selections["Parent Genre"]
-                                       ]["defining_characteristics"]
+    output_data = {
+        "Parent Genre": user_selections["Parent Genre"],
+        "Genre": user_selections["Genre"],
+        "Generated BPM": bpm,
+        "Time Signature": user_selections["Time Signature"],
+        "Mood": user_selections["Mood"],
+        "Key": user_selections["Key"],
+        "Mode": user_selections["Mode"],
+        "Arrangement": arrangement,
+        "Instruments": instruments,
+        "Characteristics": characteristics
+    }
 
-        output_data = {
-            "Parent Genre": user_selections["Parent Genre"],
-            "Genre": user_selections["Genre"],
-            "Generated BPM": bpm,
-            "Time Signature": user_selections["Time Signature"],
-            "Mood": user_selections["Mood"],
-            "Key": user_selections["Key"],
-            "Mode": user_selections["Mode"],
-            "Arrangement": arrangement,
-            "Instruments": instruments,
-            "Characteristics": characteristics
-        }
-
-        display_output(output_data)
-
-        restart = input(
-            "Type '-restart' to start over, or press Enter to continue.")
-        if restart != '-restart':
-            break
+    display_output(output_data)
 
 
 if __name__ == "__main__":
