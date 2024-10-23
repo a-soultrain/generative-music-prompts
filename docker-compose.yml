@@ -1,8 +1,7 @@
 services:
   wrongnotes_backend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      dockerfile: ./audio_brainstorm/Dockerfile
     image: play-the-wrong-notes:development
     ports:
       - "8000:8000"
@@ -19,6 +18,15 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  
+  wrongnotes_frontend:
+    build:
+      context: ./wrong_notes
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - wrongnotes_backend
 
 volumes:
   db_data:

@@ -11,6 +11,9 @@ The module utilizes other modules for:
 
 The generated prompt data is then displayed to the user via Terminal.
 """
+from fastapi import FastAPI
+from fast.api.middleware.cors import CORSMiddleware
+
 import random
 from audio_brainstorm.modules.user_interface import (
     display_welcome,
@@ -27,6 +30,22 @@ from audio_brainstorm.modules.music_theory import (
 from audio_brainstorm.data.dictionaries import (
     parent_genre
 )
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+def read_root():
+    """Root endpoint to test the connection with the frontend."""
+    return {"message": "Hello from FastAPI! Ready for WrongNotes.svelte"}
 
 
 def get_user_selections():
@@ -79,7 +98,3 @@ def main():
     }
 
     display_output(output_data)
-
-
-if __name__ == "__main__":
-    main()

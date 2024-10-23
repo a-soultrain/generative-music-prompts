@@ -6,6 +6,7 @@ venv/
 
 # Build artifacts:
 dist/
+node_modules/
 build/
 egg-info/
 *.egg-info/

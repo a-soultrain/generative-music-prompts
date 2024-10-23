@@ -1,0 +1,19 @@
+{
+    "name": "WrongNotes",
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+      "dev": "vite dev",
+      "build": "vite build",
+      "start": "vite preview"
+    },
+    "devDependencies": {
+      "@sveltejs/kit": "latest", 
+      "svelte": "^5.0.0",
+      "vite": "^5.0.0"
+    },
+    "dependencies": {
+      "axios": "^1.5.1" 
+    }
+  }
+  
